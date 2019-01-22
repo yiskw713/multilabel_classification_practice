@@ -208,12 +208,12 @@ def main():
             writer.add_scalar("accuracy", accuracy_val[-1], epoch)
             writer.add_scalars("class_accuracy", {
                                                 'accuracy of class 1': class_accuracy_val[-1][0],
-                                                'accuracy of class 0': class_accuracy_val[-1][1],
-                                                'accuracy of class 0': class_accuracy_val[-1][2],
-                                                'accuracy of class 0': class_accuracy_val[-1][3],
-                                                'accuracy of class 0': class_accuracy_val[-1][4],
-                                                'accuracy of class 0': class_accuracy_val[-1][5],
-                                                'accuracy of class 0': class_accuracy_val[-1][6],
+                                                'accuracy of class 2': class_accuracy_val[-1][1],
+                                                'accuracy of class 3': class_accuracy_val[-1][2],
+                                                'accuracy of class 4': class_accuracy_val[-1][3],
+                                                'accuracy of class 5': class_accuracy_val[-1][4],
+                                                'accuracy of class 6': class_accuracy_val[-1][5],
+                                                'accuracy of class 7': class_accuracy_val[-1][6],
                                                 }, epoch)
 
         print('epoch: {}\tloss_train: {:.5f}\tloss_val: {:.5f}\taccuracy: {:.5f}'
