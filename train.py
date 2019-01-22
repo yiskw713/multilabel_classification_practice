@@ -94,7 +94,7 @@ def eval_model(model, test_loader, criterion, config, device):
     class_accuracy = accurate_num / total_num
     accuracy = torch.sum(accurate_num) / torch.sum(total_num)
 
-    return eval_loss.item(), class_accuracy, accuracy
+    return eval_loss.item(), class_accuracy, accuracy.item()
 
 
 
