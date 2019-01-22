@@ -73,7 +73,7 @@ class ToTensor(object):
         if 'label' in sample:
             image, label = sample['image'], sample['label']
             return {'image': transforms.functional.to_tensor(image).float(), 
-                    'label': torch.from_numpy(label).long()}
+                    'label': torch.from_numpy(label).float()}
         else:
             image = sample['image']
             return {'image': transforms.functional.to_tensor(image).float()}
