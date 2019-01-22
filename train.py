@@ -217,7 +217,7 @@ def main():
                                                 }, epoch)
 
         print('epoch: {}\tloss_train: {:.5f}\tloss_val: {:.5f}\taccuracy: {:.5f}'
-            .format(epoch, losses_train[-1], losses_val[-1], accuracy[-1]))
+            .format(epoch, losses_train[-1], losses_val[-1], accuracy_val[-1]))
 
 
     torch.save(model.state_dict(), CONFIG.result_path + '/final_model.prm')
