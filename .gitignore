@@ -7,4 +7,4 @@ __pycache__/
 .ipynb_checkpoints
 
 # dataset
-dataset/tools
+part-affordance-dataset/tools
