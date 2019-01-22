@@ -71,7 +71,6 @@ def eval_model(model, test_loader, criterion, config, device):
         x, y = sample['image'], sample['label']
 
         x = x.to(device)
-        y = y.to(device)
 
         with torch.no_grad():
             h = model(x)     # shape => (N, 7)
@@ -83,12 +82,13 @@ def eval_model(model, test_loader, criterion, config, device):
 
             h[h>0.5] = 1
             h[h<=0.5] = 0
+            h.to('cpu')
 
-            total_num += float(len(sample))
+            total_num += float(len(y))
             accurate_num += torch.sum(h == y, 0).float()
 
 
-    eval_loss = eval_loss / len(sample)
+    eval_loss = eval_loss / len(y)
 
     ''' accuracy of each class'''
     class_accuracy = accurate_num / total_num
@@ -178,7 +178,6 @@ def main():
         epoch_loss = 0.0
 
         for sample in train_loader:
-
             loss_train = full_train(model, sample, criterion, optimizer, args.device)
             
             epoch_loss += loss_train
