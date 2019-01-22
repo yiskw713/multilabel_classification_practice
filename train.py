@@ -195,7 +195,7 @@ def main():
         accuracy_val.append(accuracy)
 
 
-        if best_accuracy < accuracy[-1]:
+        if best_accuracy < accuracy_val[-1]:
             best_accuracy = accuracy[-1]
             torch.save(model.state_dict(), CONFIG.result_path + '/best_accuracy_model.prm')
 
