@@ -79,7 +79,7 @@ def eval_model(model, test_loader, criterion, config, device):
             loss = criterion(h, y)
             eval_loss += loss
 
-            h = nn.Sigmoid(h)
+            h = F.sigmoid(h)
 
             h[h>0.5] = 1
             h[h<=0.5] = 0
