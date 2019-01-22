@@ -84,7 +84,7 @@ def eval_model(model, test_loader, criterion, config, device):
             h[h>0.5] = 1
             h[h<=0.5] = 0
 
-            total_num += len(sample).float()
+            total_num += float(len(sample))
             accurate_num += torch.sum(h == y, 0).float()
 
 
