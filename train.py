@@ -63,14 +63,15 @@ def eval_model(model, test_loader, criterion, config, device):
 
     model.eval()
     
-    total_num = torch.zeros(7)
-    accurate_num = torch.zeros(7)
+    total_num = torch.zeros(7).to(device)
+    accurate_num = torch.zeros(7).to(device)
     eval_loss = 0.0
 
     for sample in test_loader:
         x, y = sample['image'], sample['label']
 
         x = x.to(device)
+        y = y.to(device)
 
         with torch.no_grad():
             h = model(x)     # shape => (N, 7)
@@ -78,11 +79,10 @@ def eval_model(model, test_loader, criterion, config, device):
             loss = criterion(h, y)
             eval_loss += loss
 
-            h = F.sigmoid(h)
+            h = torch.sigmoid(h)
 
             h[h>0.5] = 1
             h[h<=0.5] = 0
-            h.to('cpu')
 
             total_num += float(len(y))
             accurate_num += torch.sum(h == y, 0).float()
@@ -94,7 +94,7 @@ def eval_model(model, test_loader, criterion, config, device):
     class_accuracy = accurate_num / total_num
     accuracy = torch.sum(accurate_num) / torch.sum(total_num)
 
-    return eval_loss.item(), class_accuracy, accuracy
+    return eval_loss.item(), class_accuracy.to('cpu'), accuracy.to('cpu')
 
 
 
