@@ -94,7 +94,7 @@ def eval_model(model, test_loader, criterion, config, device):
     class_accuracy = accurate_num / total_num
     accuracy = torch.sum(accurate_num) / torch.sum(total_num)
 
-    return eval_loss.item(), class_accuracy.to('cpu'), accuracy.to('cpu')
+    return eval_loss.item(), class_accuracy, accuracy
 
 
 
@@ -154,12 +154,16 @@ def main():
 
 
     model = models.vgg16_bn(pretrained=True)
+
+    for param in model.features.parameters():
+        param.requires_grad = False
+    
     model.classifier[6] = nn.Linear(in_features=4096, out_features=7, bias=True)
     model.to(args.device)
 
 
     """ optimizer, criterion """
-    optimizer = optim.Adam(model.parameters(), lr=CONFIG.learning_rate)
+    optimizer = optim.Adam(model.classifier.parameters(), lr=CONFIG.learning_rate)
     
     criterion = nn.BCEWithLogitsLoss()
 
