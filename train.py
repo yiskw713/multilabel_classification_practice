@@ -16,8 +16,6 @@ import tqdm
 import yaml
 
 from addict import Dict
-from itertools import zip_longest
-from PIL import Image, ImageFilter
 from tensorboardX import SummaryWriter
 
 from dataset import PartAffordanceDataset, ToTensor, CenterCrop, Normalize
@@ -48,7 +46,7 @@ def full_train(model, sample, criterion, optimizer, device):
     x = x.to(device)
     y = y.to(device)
     
-    h = model(x)
+    h = model(x)    # shape => (N, 7)
 
     loss = criterion(h, y)
 
@@ -80,6 +78,8 @@ def eval_model(model, test_loader, criterion, config, device):
 
             loss = criterion(h, y)
             eval_loss += loss
+
+            h = nn.Sigmoid(h)
 
             h[h>0.5] = 1
             h[h<=0.5] = 0
@@ -183,7 +183,7 @@ def main():
             
             epoch_loss += loss_train
 
-        losses_train.append(epoch_loss / len(sample))
+        losses_train.append(epoch_loss / len(train_loader))
 
         # validation
         loss_val, class_accuracy, accuracy = eval_model(model, test_loader, criterion, CONFIG, args.device)
